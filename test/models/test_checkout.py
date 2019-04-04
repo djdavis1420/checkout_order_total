@@ -1,4 +1,4 @@
-from src.checkout import Checkout
+from src.models.checkout import Checkout
 from src.models.store import Store
 from src.models.cart import Cart
 from src.models.product import Product
