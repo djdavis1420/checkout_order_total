@@ -14,3 +14,8 @@ class Store:
     def discontinue_product(self, product):
         if product in self.products:
             self.products.remove(product)
+
+    def activate_special_on_product(self, product, special_type):
+        for item in self.products:
+            if item.name == product.name:
+                item.special = special_type
