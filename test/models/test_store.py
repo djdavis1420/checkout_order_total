@@ -37,5 +37,5 @@ class Test:
         self.store.stock_product(self.beef)
         special_type = 'basic unit discount'
         self.store.activate_special_on_product(self.soup, special_type)
-        assert self.soup.special == 'basic unit discount'
-        assert self.beef.special is False
+        assert self.soup.special_type == 'basic unit discount'
+        assert self.beef.special_type is False

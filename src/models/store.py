@@ -18,4 +18,4 @@ class Store:
     def activate_special_on_product(self, product, special_type):
         for item in self.products:
             if item.name == product.name:
-                item.special = special_type
+                item.special_type = special_type
