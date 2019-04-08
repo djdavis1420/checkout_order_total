@@ -3,7 +3,8 @@ class Product:
         self.name = name
         self.unit_price = unit_price
         self.unit_weight = unit_weight
-        self.special_type = False
+        self.has_special = False
+        self.special_details = {}
         self.discount_price = None
         self.sale_price = None
 

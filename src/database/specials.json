@@ -1,0 +1,29 @@
+[
+  {
+    "specialItem": "soup",
+    "specialDetails": {
+      "specialType": "basic unit discount",
+      "perUnitDiscount": 0.20,
+      "limit": 5
+    }
+  },
+  {
+    "specialItem": "soda",
+    "specialDetails": {
+      "specialType": "buy x get y",
+      "x": 2,
+      "y": 1,
+      "z": 100,
+      "limit": 2
+    }
+  },
+  {
+    "specialItem": "soap",
+    "specialDetails": {
+      "specialType": "buy x for y",
+      "x": 3,
+      "y": 5,
+      "limit": 2
+    }
+  }
+]

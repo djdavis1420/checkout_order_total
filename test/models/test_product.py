@@ -1,7 +1,7 @@
 from src.models.product import Product
 
 
-class Test:
+class TestProduct:
 
     def setup_method(self):
         self.soup = Product('soup', 1.89)
