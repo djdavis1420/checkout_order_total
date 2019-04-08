@@ -29,11 +29,11 @@ class TestSpecial:
         self.beefs = [self.beef]
         self.cheeses = [self.cheese, self.cheese]
         self.cart.products = self.soups + self.sodas + self.soaps + self.beefs + self.cheeses
+        self.cart.standard_items = self.cheeses + self.beefs
+        self.cart.special_items = self.soups + self.sodas + self.soaps
 
     @patch('src.models.specials.get_special')
     def test_basic_unit_discount__should_total_five_items_with_basic_unit_discount(self, mock_special):
-        self.cart.standard_items = self.cheeses + self.beefs
-        self.cart.special_items = self.soups + self.sodas + self.soaps
         item_name = 'soup'
         special_details = {'specialType': 'basic unit discount', 'perUnitDiscount': 0.20, 'limit': 5}
         mock_special.return_value = special_details
@@ -42,10 +42,49 @@ class TestSpecial:
 
     @patch('src.models.specials.get_special')
     def test_basic_unit_discount__should_total_five_items_with_basic_unit_discount_and_one_without_basic_unit_discount_due_to_limit_of_five(self, mock_special):
-        self.cart.standard_items = self.cheeses + self.beefs
-        self.cart.special_items = self.soups + self.sodas + self.soaps + [self.soup]
+        self.cart.special_items += [self.soup]
         item_name = 'soup'
         special_details = {'specialType': 'basic unit discount', 'perUnitDiscount': 0.20, 'limit': 5}
         mock_special.return_value = special_details
         actual = specials.basic_unit_discount(self.cart, item_name)
         assert actual == 10.34
+
+    @patch('src.models.specials.get_special')
+    def test_buy_x_get_y__should_buy_two_get_one_free_twice(self, mock_special):
+        item_name = 'soda'
+        special_details = {'specialType': 'buy x get y', 'x': 2, 'y': 1, 'z': 100, 'limit': 2}
+        mock_special.return_value = special_details
+        actual = specials.buy_x_get_y(self.cart, item_name)
+        assert actual == 5.96
+
+    @patch('src.models.specials.get_special')
+    def test_buy_x_get_y__should_buy_three_get_one_free_with_two_extra(self, mock_special):
+        item_name = 'soda'
+        special_details = {'specialType': 'buy x get y', 'x': 3, 'y': 1, 'z': 100, 'limit': 2}
+        mock_special.return_value = special_details
+        actual = specials.buy_x_get_y(self.cart, item_name)
+        assert actual == 7.45
+
+    @patch('src.models.specials.get_special')
+    def test_buy_x_get_y__should_buy_two_get_one_half_off_twice(self, mock_special):
+        item_name = 'soda'
+        special_details = {'specialType': 'buy x get y', 'x': 2, 'y': 1, 'z': 50, 'limit': 2}
+        mock_special.return_value = special_details
+        actual = specials.buy_x_get_y(self.cart, item_name)
+        assert actual == 7.45
+
+    @patch('src.models.specials.get_special')
+    def test_buy_x_get_y__should_buy_two_get_one_free_with_three_extra(self, mock_special):
+        item_name = 'soda'
+        special_details = {'specialType': 'buy x get y', 'x': 2, 'y': 1, 'z': 100, 'limit': 1}
+        mock_special.return_value = special_details
+        actual = specials.buy_x_get_y(self.cart, item_name)
+        assert actual == 7.45
+
+    @patch('src.models.specials.get_special')
+    def test_buy_x_get_y__should_buy_two_get_one_half_off_with_three_extra(self, mock_special):
+        item_name = 'soda'
+        special_details = {'specialType': 'buy x get y', 'x': 2, 'y': 1, 'z': 50, 'limit': 1}
+        mock_special.return_value = special_details
+        actual = specials.buy_x_get_y(self.cart, item_name)
+        assert actual == 8.20
