@@ -22,9 +22,11 @@ def buy_x_get_y(cart, item_name):
     products = [product for product in cart.special_items if product.name == item_name]
     limit = special_details['limit']
     count = len(products)
-    unit_standard_price = products[0].unit_price
+    standard_price = products[0].unit_price
+    special_price = (standard_price - (standard_price * (special_details['z'] / 100)))
     products_at_standard_price = 0
-    products_at_discounted_price = 0
+    products_at_special_price = 0
+    total_price = 0
 
     if (limit == 0) or (limit is None):
         limit = 99999
@@ -37,20 +39,37 @@ def buy_x_get_y(cart, item_name):
             buy_count += 1
             count -= 1
         while get_count < special_details['y'] and limit > 0 and count > 0:
-            products_at_discounted_price += 1
+            products_at_special_price += 1
             get_count += 1
             count -= 1
         limit -= 1
     products_at_standard_price += count
 
-    unit_discounted_price = (unit_standard_price - (unit_standard_price * (special_details['z'] / 100)))
-    total_at_standard_price = products_at_standard_price * unit_standard_price
-    total_at_discounted_price = products_at_discounted_price * unit_discounted_price
-    total_price = total_at_standard_price + total_at_discounted_price
+    total_at_standard_price = products_at_standard_price * standard_price
+    total_at_special_price = products_at_special_price * special_price
+    total_price = total_at_standard_price + total_at_special_price
 
     return round(total_price, 2)
 
 
 def buy_x_for_y(cart, item_name):
-    total = 0
-    return total
+    special_details = get_special(item_name)
+    products = [product for product in cart.special_items if product.name == item_name]
+    standard_price = products[0].unit_price
+    special_price = special_details['y']
+
+    products_at_special_price = len(products) // special_details['x']
+    products_at_standard_price = len(products) % special_details['x']
+
+    if products_at_special_price > special_details['limit']:
+        difference = products_at_special_price - special_details['limit']
+        products_at_special_price = special_details['limit']
+        difference = difference * 3
+        products_at_standard_price += difference
+
+    total_at_standard_price = products_at_standard_price * standard_price
+    total_at_special_price = products_at_special_price * special_price
+    total_price = total_at_special_price + total_at_standard_price
+
+    return round(total_price, 2)
+
