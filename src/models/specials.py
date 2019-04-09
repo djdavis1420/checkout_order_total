@@ -26,7 +26,6 @@ def buy_x_get_y(cart, item_name):
     special_price = (standard_price - (standard_price * (special_details['z'] / 100)))
     products_at_standard_price = 0
     products_at_special_price = 0
-    total_price = 0
 
     if (limit == 0) or (limit is None):
         limit = 99999
@@ -72,4 +71,3 @@ def buy_x_for_y(cart, item_name):
     total_price = total_at_special_price + total_at_standard_price
 
     return round(total_price, 2)
-

@@ -1,5 +1,7 @@
 import copy
 
+from src.models import specials
+
 
 class Cart():
     def __init__(self):
@@ -34,3 +36,14 @@ class Cart():
                 self.standard_items.append(item)
             else:
                 self.special_items.append(item)
+
+    def total_specials(self):
+        self.total = 0
+        unique_products = {item for item in self.special_items}
+        for item in unique_products:
+            if item.special_details['specialType'] == 'basic unit discount':
+                self.total += specials.basic_unit_discount(self, item.name)
+            elif item.special_details['specialType'] == 'buy x get y':
+                self.total += specials.buy_x_get_y(self, item.name)
+            elif item.special_details['specialType'] == 'buy x for y':
+                self.total += specials.buy_x_for_y(self, item.name)

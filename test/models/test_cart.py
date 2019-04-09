@@ -56,3 +56,9 @@ class TestCart:
         self.cart.parse_cart()
         assert len(self.cart.standard_items) == 3
         assert len(self.cart.special_items) == 15
+
+    def test_total_specials__should_total_all_items_with_active_specials(self):
+        self.cart.standard_items = self.cheeses + self.beefs
+        self.cart.special_items = self.soups + self.sodas + self.soaps
+        self.cart.total_specials()
+        assert self.cart.total == 21.90
