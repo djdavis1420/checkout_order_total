@@ -5,7 +5,7 @@ def basic_unit_discount(cart, item_name):
     special_details = get_special(item_name)
     products = [product for product in cart.special_items if product.name == item_name]
     limit = special_details['limit']
-    total = 0
+    total_price = 0
     for product in products:
         limit -= 1
         if limit >= 0:
@@ -13,8 +13,8 @@ def basic_unit_discount(cart, item_name):
             product.sale_price = product.discount_price
         elif limit < 0:
             product.sale_price = product.unit_price
-        total += product.sale_price
-    return round(total, 2)
+        total_price += product.sale_price
+    return round(total_price, 2)
 
 
 def buy_x_get_y(cart, item_name):
@@ -22,9 +22,12 @@ def buy_x_get_y(cart, item_name):
     products = [product for product in cart.special_items if product.name == item_name]
     limit = special_details['limit']
     count = len(products)
-    unit_price = products[0].unit_price
+    unit_standard_price = products[0].unit_price
     products_at_standard_price = 0
     products_at_discounted_price = 0
+
+    if (limit == 0) or (limit is None):
+        limit = 99999
 
     while count > 0 and limit > 0:
         buy_count = 0
@@ -40,10 +43,12 @@ def buy_x_get_y(cart, item_name):
         limit -= 1
     products_at_standard_price += count
 
-    total_at_standard_price = products_at_standard_price * unit_price
-    total_at_discounted_price = products_at_discounted_price * (unit_price - (unit_price * (special_details['z'] / 100)))
+    unit_discounted_price = (unit_standard_price - (unit_standard_price * (special_details['z'] / 100)))
+    total_at_standard_price = products_at_standard_price * unit_standard_price
+    total_at_discounted_price = products_at_discounted_price * unit_discounted_price
+    total_price = total_at_standard_price + total_at_discounted_price
 
-    return round(total_at_standard_price + total_at_discounted_price, 2)
+    return round(total_price, 2)
 
 
 def buy_x_for_y(cart, item_name):

@@ -88,3 +88,19 @@ class TestSpecial:
         mock_special.return_value = special_details
         actual = specials.buy_x_get_y(self.cart, item_name)
         assert actual == 8.20
+
+    @patch('src.models.specials.get_special')
+    def test_buy_x_get_y__should_buy_two_get_one_half_off_twice_due_to_limit_of_0(self, mock_special):
+        item_name = 'soda'
+        special_details = {'specialType': 'buy x get y', 'x': 2, 'y': 1, 'z': 50, 'limit': 0}
+        mock_special.return_value = special_details
+        actual = specials.buy_x_get_y(self.cart, item_name)
+        assert actual == 7.45
+
+    @patch('src.models.specials.get_special')
+    def test_buy_x_get_y__should_buy_two_get_one_half_off_twice_due_to_limit_of_none(self, mock_special):
+        item_name = 'soda'
+        special_details = {'specialType': 'buy x get y', 'x': 2, 'y': 1, 'z': 50, 'limit': None}
+        mock_special.return_value = special_details
+        actual = specials.buy_x_get_y(self.cart, item_name)
+        assert actual == 7.45
