@@ -28,15 +28,21 @@ class TestCart:
         self.cheeses = [self.cheese, self.cheese]
         self.cart.products = self.soups + self.sodas + self.soaps + self.beefs + self.cheeses
 
-    def test_add_product__should_add_one_soup_to_cart(self):
+    def test_add_product_by_unit__should_add_one_soup_to_cart(self):
         self.cart.products = []
-        self.cart.add_product(self.store, self.soup, 1)
+        self.cart.add_product_by_unit(self.store, self.soup, 1)
         assert len(self.cart.products) == 1
 
-    def test_add_product__should_add_three_soups_to_cart(self):
+    def test_add_product_by_unit__should_add_three_soups_to_cart(self):
         self.cart.products = []
-        self.cart.add_product(self.store, self.soup, 3)
+        self.cart.add_product_by_unit(self.store, self.soup, 3)
         assert len(self.cart.products) == 3
+
+    def test_add_product_by_weight__should_add_half_pound_of_beef_to_cart(self):
+        self.cart.products = []
+        self.cart.add_product_by_weight(self.store, self.beef, .50)
+        assert len(self.cart.products) == 1
+        assert self.cart.products[0].unit_weight == .5
 
     def test_remove_product__should_remove_one_soup_from_cart_leaving_two(self):
         self.cart.products = [self.soup, self.soup, self.soup]
@@ -52,6 +58,13 @@ class TestCart:
         actual = self.cart.basic_checkout()
         assert actual == 39.10
         assert len(self.cart.products) == 18
+
+    def test_basic_checkout__should_total_half_pound_beef_and_half_pound_cheese(self):
+        beef = Product('beef', 5.99, .5)
+        cheese = Product('cheese', 2.38, .5)
+        self.cart.products = [beef, cheese]
+        actual = self.cart.basic_checkout()
+        assert actual == 4.19
 
     def test_parse_cart__should_divide_items_into_standard_items_and_special_items(self):
         self.cart.parse_cart()

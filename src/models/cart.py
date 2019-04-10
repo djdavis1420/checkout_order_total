@@ -10,11 +10,17 @@ class Cart():
         self.special_items = []
         self.total = 0
 
-    def add_product(self, store, product, quantity):
+    def add_product_by_unit(self, store, product, quantity):
         if store.is_product_available(product):
             while quantity > 0:
                 self.products.append(copy.deepcopy(product))
                 quantity -= 1
+
+    def add_product_by_weight(self, store, product, weight):
+        if store.is_product_available(product):
+            product_to_add = copy.deepcopy(product)
+            product_to_add.unit_weight = weight
+            self.products.append(product_to_add)
 
     def remove_product(self, product, quantity):
         while quantity > 0:
