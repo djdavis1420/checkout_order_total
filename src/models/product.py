@@ -8,6 +8,12 @@ class Product:
         self.discount_price = None
         self.sale_price = None
 
+    def __hash__(self):
+        return hash(self.name)
+
+    def __eq__(self, other):
+        return self.name == other.name
+
     def calculate_product_cost(self):
         use_price = self.discount_price if self.discount_price is not None else self.unit_price
         self.sale_price = round((use_price * self.unit_weight), 2)

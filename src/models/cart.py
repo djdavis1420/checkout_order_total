@@ -37,8 +37,11 @@ class Cart():
             else:
                 self.special_items.append(item)
 
-    def total_specials(self):
-        self.total = 0
+    def total_standard_items(self):
+        for item in self.standard_items:
+            self.total += item.calculate_product_cost()
+
+    def total_special_items(self):
         unique_products = {item for item in self.special_items}
         for item in unique_products:
             if item.special_details['specialType'] == 'basic unit discount':
@@ -47,3 +50,8 @@ class Cart():
                 self.total += specials.buy_x_get_y(self, item.name)
             elif item.special_details['specialType'] == 'buy x for y':
                 self.total += specials.buy_x_for_y(self, item.name)
+
+    def total_all_items(self):
+        self.total_standard_items()
+        self.total_special_items()
+        return round(self.total, 2)

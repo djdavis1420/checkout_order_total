@@ -1,3 +1,4 @@
+from copy import deepcopy
 from src.models.store import Store
 from src.models.cart import Cart
 from src.models.product import Product
@@ -57,8 +58,35 @@ class TestCart:
         assert len(self.cart.standard_items) == 3
         assert len(self.cart.special_items) == 15
 
-    def test_total_specials__should_total_all_items_with_active_specials(self):
+    def test_total_standard_items__should_total_all_standard_items(self):
         self.cart.standard_items = self.cheeses + self.beefs
         self.cart.special_items = self.soups + self.sodas + self.soaps
-        self.cart.total_specials()
+        self.cart.total_standard_items()
+        assert self.cart.total == 10.75
+
+    def test_total_special_items__should_total_all_items_with_active_specials(self):
+        self.cart.standard_items = self.cheeses + self.beefs
+        self.cart.special_items = self.soups + self.sodas + self.soaps
+        self.cart.total_special_items()
+        assert self.cart.total == 21.90
+
+    def test_total_all_items__should_return_total_of_standard_items_and_special_items(self):
+        self.cart.standard_items = self.cheeses + self.beefs
+        self.cart.special_items = self.soups + self.sodas + self.soaps
+        actual = self.cart.total_all_items()
+        assert actual == 32.65
+
+    # This test overwrites some of TestCart setup in order to test {set} of objects based on object.name
+    # The behavior being tested is the deduplication of deep copies of objects based on object.name
+    # This behavior is achieved by overwriting __hash__ and __eq__ on Product
+    def test_total_special_items__testing_set_of_objects_based_on_object_name(self):
+        self.cart.products = []
+        self.soups = [deepcopy(self.soup), deepcopy(self.soup), deepcopy(self.soup), deepcopy(self.soup), deepcopy(self.soup)]
+        self.sodas = [deepcopy(self.soda), deepcopy(self.soda), deepcopy(self.soda), deepcopy(self.soda), deepcopy(self.soda), deepcopy(self.soda)]
+        self.soaps = [deepcopy(self.soap), deepcopy(self.soap), deepcopy(self.soap), deepcopy(self.soap)]
+        self.beefs = [deepcopy(self.beef)]
+        self.cheeses = [deepcopy(self.cheese), deepcopy(self.cheese)]
+        self.cart.products = self.soups + self.sodas + self.soaps + self.beefs + self.cheeses
+        self.cart.parse_cart()
+        self.cart.total_special_items()
         assert self.cart.total == 21.90
