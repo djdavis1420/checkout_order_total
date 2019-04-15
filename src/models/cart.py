@@ -11,21 +11,21 @@ class Cart():
         self.total = 0
 
     def add_product_by_unit(self, store, product, quantity):
-        if store.is_product_available(product):
+        if store.is_product_available(product.name):
             while quantity > 0:
                 self.products.append(copy.deepcopy(product))
                 quantity -= 1
 
     def add_product_by_weight(self, store, product, weight):
-        if store.is_product_available(product):
+        if store.is_product_available(product.name):
             product_to_add = copy.deepcopy(product)
             product_to_add.unit_weight = weight
             self.products.append(product_to_add)
 
-    def remove_product(self, product, quantity):
+    def remove_product(self, product_name, quantity):
         while quantity > 0:
             for item in self.products:
-                if item.name == product.name:
+                if item.name == product_name:
                     self.products.remove(item)
                     quantity -= 1
                     break

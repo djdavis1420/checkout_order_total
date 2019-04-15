@@ -12,17 +12,17 @@ class TestStore:
         self.beef = Product('beef', 5.99)
 
     def test_is_product_available__should_be_false_if_list_is_empty(self):
-        actual = self.store.is_product_available(self.soup)
+        actual = self.store.is_product_available('soup')
         assert actual is False
 
     def test_is_product_available__should_be_false_if_item_not_in_list(self):
         self.store.products = [self.beef]
-        actual = self.store.is_product_available(self.soup)
+        actual = self.store.is_product_available('soup')
         assert actual is False
 
     def test_is_product_available__should_be_true(self):
         self.store.products = [self.soup]
-        actual = self.store.is_product_available(self.soup)
+        actual = self.store.is_product_available('soup')
         assert actual is True
 
     def test_stock_product__should_be_true(self):

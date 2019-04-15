@@ -6,8 +6,8 @@ class Store:
     def __init__(self):
         self.products = []
 
-    def is_product_available(self, product):
-        if product not in self.products:
+    def is_product_available(self, product_name):
+        if product_name not in [item.name for item in self.products]:
             return False
         return True
 
@@ -16,8 +16,7 @@ class Store:
             self.products.append(product)
 
     def stock_products(self):
-        products = get_all_products()
-        self.products = products
+        self.products = get_all_products()
 
     def discontinue_product(self, product):
         if product in self.products:

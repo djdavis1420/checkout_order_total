@@ -11,4 +11,4 @@ def get_all_products():
 
 def create_product(product):
     item = product.strip().split(',')
-    return Product(item[0], item[1], item[2])
+    return Product(item[0], float(item[1]), int(item[2]))

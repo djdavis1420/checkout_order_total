@@ -46,12 +46,12 @@ class TestCart:
 
     def test_remove_product__should_remove_one_soup_from_cart_leaving_two(self):
         self.cart.products = [self.soup, self.soup, self.soup]
-        self.cart.remove_product(self.soup, 1)
+        self.cart.remove_product('soup', 1)
         assert len(self.cart.products) == 2
 
     def test_remove_product__should_remove_two_soups_from_cart_leaving_one(self):
         self.cart.products = [self.soup, self.soup, self.soup]
-        self.cart.remove_product(self.soup, 2)
+        self.cart.remove_product('soup', 2)
         assert len(self.cart.products) == 1
 
     def test_basic_checkout__should_total_items_in_cart(self):
