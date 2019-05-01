@@ -157,3 +157,12 @@ class TestSpecial:
         mock_special.return_value = special_details
         actual = specials.buy_some_for_amount(self.cart, item_name)
         assert actual == 19.96
+
+    @patch('src.models.specials.get_special')
+    def test_buy_some_for_amount__should_buy_four_for_five_once_with_six_extra_due_to_limit_of_one(self, mock_special):
+        self.cart.special_items += [self.soap, self.soap, self.soap, self.soap, self.soap, self.soap]
+        item_name = 'soap'
+        special_details = {'specialType': 'buy some for amount', 'buyAmount': 4, 'dollarAmount': 5, 'limit': 1}
+        mock_special.return_value = special_details
+        actual = specials.buy_some_for_amount(self.cart, item_name)
+        assert actual == 19.94

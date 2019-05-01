@@ -57,17 +57,17 @@ def buy_some_for_amount(cart, item_name):
     standard_price = products[0].unit_price
     special_price = special_details['dollarAmount']
 
-    products_at_special_price = len(products) // special_details['buyAmount']
+    specials_at_special_price = len(products) // special_details['buyAmount']
     products_at_standard_price = len(products) % special_details['buyAmount']
 
-    if products_at_special_price > special_details['limit']:
-        difference = products_at_special_price - special_details['limit']
-        products_at_special_price = special_details['limit']
-        difference = difference * 3
+    if specials_at_special_price > special_details['limit']:
+        difference = specials_at_special_price - special_details['limit']
+        specials_at_special_price = special_details['limit']
+        difference = difference * special_details['buyAmount']
         products_at_standard_price += difference
 
     total_at_standard_price = products_at_standard_price * standard_price
-    total_at_special_price = products_at_special_price * special_price
+    total_at_special_price = specials_at_special_price * special_price
     total_price = total_at_special_price + total_at_standard_price
 
     return round(total_price, 2)
