@@ -32,9 +32,9 @@ IntelliJ IDEA with Python Plugin (or PyCharm)
  - Three types of specials are defined by default
     - A "basic unit discount" special on soup
         - $0.20 off per unit, up to five times
-    - A "buy x get y" special on soda
+    - A "buy some get some" special on soda
         - buy two, get one free (100% off), up to two times
-    - A "buy x for y" special on soap
+    - A "buy some for amount" special on soap
         - buy three for $5.00, up to two times
  - To add additional specials:
     - Open the specials.json file.
@@ -45,6 +45,9 @@ IntelliJ IDEA with Python Plugin (or PyCharm)
  - Right-click on checkout_order_total/src/console_app.py
  - Select "Run 'console_app'"
  - Follow the prompts in the console
+ 
+## Assumptions
+ - All input in the console application will follow the proper format as specified in the console instructions.
 
 ## Future Features
  - Error/Exception Handling

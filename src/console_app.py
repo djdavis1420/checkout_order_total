@@ -15,8 +15,9 @@ while shopping is True:
     print([item.name for item in store.products])
 
     item_to_add = input('\nWhat would you like to add to your cart? Please type the name of the item (without quotes)\nas it appears in the list above, type REVIEW to review your cart, or type EXIT to exit.\n\n')
+    item_to_add = item_to_add.lower()
 
-    if item_to_add == 'EXIT':
+    if item_to_add == 'exit':
         break
 
     product_to_add = [product for product in store.products if product.name == item_to_add]
@@ -32,7 +33,7 @@ while shopping is True:
         shopping = False
 
     reviewing = False
-    if item_to_add == 'REVIEW':
+    if item_to_add == 'review':
         reviewing = True
 
     while reviewing is True:
@@ -41,19 +42,19 @@ while shopping is True:
 
         action = input('\nWould you like to EDIT your cart or CHECKOUT?\n\n')
 
-        if action == 'EDIT' and len(cart.products) != 0:
+        if action == 'edit' and len(cart.products) != 0:
             item_to_remove = input('\nWhich item would you like to remove? Please type the name of the item (without quotes) as it appears in the list above.\n\n')
             number_to_remove = int(input('\nHow many would you like to remove? Please use standard integers (1, 2, 3, etc).\n\n'))
             cart.remove_product(item_to_remove, number_to_remove)
-        elif action == 'EDIT' and len(cart.products) == 0:
+        elif action == 'edit' and len(cart.products) == 0:
             print('\nThere is nothing in your shopping cart.\n')
             reviewing = False
             shopping = True
-        elif action == 'CHECKOUT' and len(cart.products) == 0:
+        elif action == 'checkout' and len(cart.products) == 0:
             print('\nThere is nothing in your shopping cart.\n')
             reviewing = False
             shopping = True
-        elif action == 'CHECKOUT' and len(cart.products) != 0:
+        elif action == 'checkout' and len(cart.products) != 0:
             for item in cart.products:
                 item.special_details = get_special(item.name)
                 if item.special_details is not None:
