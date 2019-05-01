@@ -1,11 +1,12 @@
 from src.models.product import Product
+import os
 
 
 def get_all_products():
-    path = 'C://Users//djdav//Development//Python//checkout_order_total//src//database//products.csv'
-    with open(path, 'r') as fileref:
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, 'products.csv')
+    with open(filename, 'r') as fileref:
         product_list = fileref.readlines()
-
         return [create_product(product) for product in product_list[1:]]
 
 
