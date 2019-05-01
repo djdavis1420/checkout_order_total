@@ -17,13 +17,13 @@ def basic_unit_discount(cart, item_name):
     return round(total_price, 2)
 
 
-def buy_x_get_y(cart, item_name):
+def buy_some_get_some(cart, item_name):
     special_details = get_special(item_name)
     products = [product for product in cart.special_items if product.name == item_name]
     limit = special_details['limit']
     count = len(products)
     standard_price = products[0].unit_price
-    special_price = (standard_price - (standard_price * (special_details['z'] / 100)))
+    special_price = (standard_price - (standard_price * (special_details['percentOff'] / 100.0)))
     products_at_standard_price = 0
     products_at_special_price = 0
 
@@ -33,11 +33,11 @@ def buy_x_get_y(cart, item_name):
     while count > 0 and limit > 0:
         buy_count = 0
         get_count = 0
-        while buy_count < special_details['x'] and limit > 0 and count > 0:
+        while buy_count < special_details['buyAmount'] and limit > 0 and count > 0:
             products_at_standard_price += 1
             buy_count += 1
             count -= 1
-        while get_count < special_details['y'] and limit > 0 and count > 0:
+        while get_count < special_details['getAmount'] and limit > 0 and count > 0:
             products_at_special_price += 1
             get_count += 1
             count -= 1
@@ -51,14 +51,14 @@ def buy_x_get_y(cart, item_name):
     return round(total_price, 2)
 
 
-def buy_x_for_y(cart, item_name):
+def buy_some_for_amount(cart, item_name):
     special_details = get_special(item_name)
     products = [product for product in cart.special_items if product.name == item_name]
     standard_price = products[0].unit_price
-    special_price = special_details['y']
+    special_price = special_details['dollarAmount']
 
-    products_at_special_price = len(products) // special_details['x']
-    products_at_standard_price = len(products) % special_details['x']
+    products_at_special_price = len(products) // special_details['buyAmount']
+    products_at_standard_price = len(products) % special_details['buyAmount']
 
     if products_at_special_price > special_details['limit']:
         difference = products_at_special_price - special_details['limit']

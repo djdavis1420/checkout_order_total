@@ -10,19 +10,19 @@
   {
     "specialItem": "soda",
     "specialDetails": {
-      "specialType": "buy x get y",
-      "x": 2,
-      "y": 1,
-      "z": 100,
+      "specialType": "buy some get some",
+      "buyAmount": 2,
+      "getAmount": 1,
+      "percentOff": 100,
       "limit": 2
     }
   },
   {
     "specialItem": "soap",
     "specialDetails": {
-      "specialType": "buy x for y",
-      "x": 3,
-      "y": 5,
+      "specialType": "buy some for amount",
+      "buyAmount": 3,
+      "dollarAmount": 5,
       "limit": 2
     }
   }

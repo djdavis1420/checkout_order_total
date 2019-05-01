@@ -14,10 +14,10 @@ class TestCart:
         self.soup.special_details = {'specialType': 'basic unit discount', 'perUnitDiscount': 0.20, 'limit': 5}
         self.soda = Product('soda', 1.49)
         self.soda.has_special = True
-        self.soda.special_details = {'specialType': 'buy x get y', 'x': 2, 'y': 1, 'z': 100, 'limit': 2}
+        self.soda.special_details = {'specialType': 'buy some get some', 'buyAmount': 2, 'getAmount': 1, 'percentOff': 100, 'limit': 2}
         self.soap = Product('soap', 2.49)
         self.soap.has_special = True
-        self.soap.special_details = {'specialType': 'buy x for y', 'x': 3, 'y': 5, 'limit': 2}
+        self.soap.special_details = {'specialType': 'buy some for amount', 'buyAmount': 3, 'dollarAmount': 5, 'limit': 2}
         self.beef = Product('beef', 5.99, 1)
         self.cheese = Product('cheese', 2.38, 1)
         self.store.products = [self.soup, self.soda, self.soap, self.beef, self.cheese]
